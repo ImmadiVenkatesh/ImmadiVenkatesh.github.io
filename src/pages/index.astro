@@ -1,0 +1,209 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Socials from "@/components/Socials.astro";
+import LinkButton from "@/components/LinkButton.astro";
+import Card from "@/components/Card.astro";
+import getSortedPosts from "@/utils/getSortedPosts";
+import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
+import { SITE } from "@/config";
+
+const posts = await getCollection("blog");
+const sortedPosts = getSortedPosts(posts);
+const recentPosts = sortedPosts.filter(({ data }) => !data.draft).slice(0, SITE.postPerIndex);
+
+const experience = [
+  {
+    role: "Business Intelligence Lead Analyst",
+    company: "GE Healthcare",
+    period: "Nov 2023 – Present",
+    tags: ["Tableau Server", "AWS", "18 Markets", "Team: 21"],
+    highlights: [
+      "Improved Tableau report performance 30% for 100+ global hospital users",
+      "Led 3 zero-defect production releases across CT, MRI, MG & Ultrasound analytics",
+      "Architected Tableau Server on AWS (EC2, RDS, EFS) with cost optimization",
+      "Delivered dashboards in 18 languages across 18 international markets",
+    ],
+  },
+  {
+    role: "Senior Consultant",
+    company: "Oracle Financial Services (Citi Bank · State Street)",
+    period: "Mar 2021 – Nov 2023",
+    tags: ["AML Compliance", "Row-Level Security", "Cognos → Tableau", "Team: 11"],
+    highlights: [
+      "Migrated 20+ Cognos reports to Tableau with zero business disruption",
+      "Implemented row-level security (RLS) for 500+ users under AML regulations",
+      "Built benchmarking dashboards comparing Aladdin, Bloomberg & MSCI data",
+    ],
+  },
+  {
+    role: "Senior Analytics Consultant",
+    company: "Brillio Technologies (Dell)",
+    period: "May 2019 – Feb 2021",
+    tags: ["Power BI", "Tableau → Power BI", "Marketing Analytics", "Team: 5"],
+    highlights: [
+      "Led migration of 15+ Tableau reports to Power BI with VP-level sign-off",
+      "Built weekly marketing performance dashboards used by Dell's VP of Marketing",
+      "Managed multi-market email analytics across Consumer, SMB, Gaming & Retail",
+    ],
+  },
+  {
+    role: "Associate Consultant / Developer",
+    company: "Capgemini (Baker Hughes / GE)",
+    period: "Feb 2016 – May 2019",
+    tags: ["Greenplum", "Informatica ETL", "Procurement Analytics", "Team: 30+"],
+    highlights: [
+      "Built procurement DWH dashboards tracking POs, invoices & payments across Oracle + SAP ERPs",
+      "Developed ETL pipelines in Informatica from flat files and Oracle tables",
+      "Embedded predictive time-series analytics models into Tableau dashboards",
+    ],
+  },
+];
+
+const skillGroups = [
+  {
+    label: "BI Tools",
+    skills: ["Tableau Desktop", "Tableau Server", "Power BI", "Cognos"],
+  },
+  {
+    label: "Databases",
+    skills: ["Oracle", "PostgreSQL", "Amazon Redshift", "Greenplum", "Hive", "SQL Server", "IBM Netezza", "MariaDB"],
+  },
+  {
+    label: "Cloud",
+    skills: ["AWS (EC2, S3, Lambda, RDS, EFS, Redshift)", "Oracle Cloud (OCI)"],
+  },
+  {
+    label: "ETL",
+    skills: ["Informatica", "Talend"],
+  },
+  {
+    label: "Languages",
+    skills: ["SQL", "Python"],
+  },
+  {
+    label: "DevOps / Other",
+    skills: ["GitLab", "GitHub", "Agile / Scrum", "JIRA"],
+  },
+];
+---
+
+<Layout>
+  <Header />
+  <main id="main-content" data-layout="index" class="app-layout">
+
+    <!-- ===== HERO ===== -->
+    <section id="hero" class="pt-8 pb-10 border-b border-border">
+      <h1 class="my-4 text-4xl font-bold sm:my-6 sm:text-5xl">
+        Venkatesh Immadi
+      </h1>
+      <p class="text-lg font-medium text-accent mb-1">
+        Business Intelligence Lead
+      </p>
+      <p class="mb-4 text-foreground/80 max-w-2xl">
+        10+ years architecting end-to-end BI &amp; analytics solutions across
+        <span class="font-medium">Healthcare</span> (GE Healthcare),
+        <span class="font-medium">BFSI</span> (Citi Bank, State Street), and
+        <span class="font-medium">Tech</span> (Dell, Oracle OFSS, Brillio, Capgemini).
+        Deep expertise in Tableau Server admin, Power BI, AWS, and enterprise ETL.
+      </p>
+      <div class="flex flex-wrap items-center gap-3 mt-4">
+        <Socials />
+        <a
+          href="/resume.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1.5 rounded border border-accent px-4 py-1.5 text-sm font-medium text-accent hover:bg-accent hover:text-background transition-colors"
+        >
+          Download Resume ↓
+        </a>
+      </div>
+    </section>
+
+    <!-- ===== EXPERIENCE ===== -->
+    <section id="experience" class="pt-12 pb-10 border-b border-border">
+      <h2 class="text-2xl font-semibold tracking-wide mb-6">Experience</h2>
+      <div class="grid gap-6 sm:grid-cols-2">
+        {experience.map(job => (
+          <div class="rounded-lg border border-border p-5 flex flex-col gap-3 hover:border-accent transition-colors">
+            <div>
+              <p class="font-semibold text-base leading-tight">{job.role}</p>
+              <p class="text-accent text-sm font-medium mt-0.5">{job.company}</p>
+              <p class="text-foreground/60 text-xs mt-0.5 font-mono">{job.period}</p>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              {job.tags.map(tag => (
+                <span class="rounded-full bg-foreground/8 px-2.5 py-0.5 text-xs font-mono text-foreground/70">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <ul class="space-y-1 text-sm text-foreground/75">
+              {job.highlights.map(h => (
+                <li class="flex gap-2">
+                  <span class="text-accent shrink-0 mt-0.5">›</span>
+                  <span>{h}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ===== SKILLS ===== -->
+    <section id="skills" class="pt-12 pb-10 border-b border-border">
+      <h2 class="text-2xl font-semibold tracking-wide mb-6">Skills</h2>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {skillGroups.map(group => (
+          <div class="rounded-lg border border-border p-4">
+            <p class="text-xs font-mono font-semibold text-accent uppercase tracking-widest mb-2">
+              {group.label}
+            </p>
+            <div class="flex flex-wrap gap-1.5">
+              {group.skills.map(skill => (
+                <span class="rounded bg-foreground/6 px-2 py-0.5 text-xs text-foreground/80">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ===== RECENT POSTS ===== -->
+    {
+      recentPosts.length > 0 && (
+        <section id="recent-posts" class="pt-12 pb-6">
+          <h2 class="text-2xl font-semibold tracking-wide mb-2">Recent Posts</h2>
+          <ul>
+            {recentPosts.map(data => (
+              <Card variant="h3" {...data} />
+            ))}
+          </ul>
+          <div class="my-8 text-center">
+            <LinkButton href="/posts/">
+              All Posts
+              <IconArrowRight class="inline-block rtl:-rotate-180" />
+            </LinkButton>
+          </div>
+        </section>
+      )
+    }
+
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const indexLayout = (document.querySelector("#main-content") as HTMLElement)
+      ?.dataset?.layout;
+    if (indexLayout) {
+      sessionStorage.setItem("backUrl", "/");
+    }
+  });
+</script>

@@ -1,0 +1,23 @@
+export const SITE = {
+  website: "https://ImmadiVenkatesh.github.io/",
+  author: "Venkatesh Immadi",
+  profile: "https://linkedin.com/in/venkateshimmadi",
+  desc: "Business Intelligence Lead with 10+ years delivering BI & analytics across Healthcare, BFSI, and Tech. Tableau, Power BI, AWS, SQL.",
+  title: "Venkatesh Immadi",
+  ogImage: "og-image.jpg",
+  lightAndDarkMode: true,
+  postPerIndex: 4,
+  postPerPage: 6,
+  scheduledPostMargin: 15 * 60 * 1000,
+  showArchives: true,
+  showBackButton: true,
+  editPost: {
+    enabled: false,
+    text: "Edit page",
+    url: "https://github.com/ImmadiVenkatesh/ImmadiVenkatesh.github.io/edit/main/",
+  },
+  dynamicOgImage: true,
+  dir: "ltr",
+  lang: "en",
+  timezone: "Asia/Kolkata",
+} as const;
